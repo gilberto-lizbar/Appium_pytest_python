@@ -3,6 +3,7 @@ import os
 
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
+from appium.options.ios import XCUITestOptions
 from appium.webdriver.appium_service import AppiumService
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.common.by import By
@@ -29,7 +30,7 @@ print(f"Appium running: {appium_service.is_running}")
 print(f"Appium listening: {appium_service.is_listening}")
 
 # To establish a session with android you need to create an instant of UIAutomator2Options
-capabilities_options = UiAutomator2Options().load_capabilities(desired_caps)
+capabilities_options = XCUITestOptions().load_capabilities(desired_caps)
 driver = webdriver.Remote('http://127.0.0.1:4723', options=capabilities_options)
 time.sleep(3)
 driver.implicitly_wait(10)

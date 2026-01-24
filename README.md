@@ -103,9 +103,22 @@ clicks on dropdown and select Edit Configuration
   
   def test_firstProgram():
 
- # Reports
+# Assertions
 
-**8. Install Pytest html reports**
+**8. Using pytest-check**
+  The pytest-check plugin is widely recommended for soft assertions. 
+  1. Installation:
+
+    pip install pytest-check
+    
+    OR
+    
+    Navigate to Settings > Project:[name] > Python Interpreter > + > Search ‘pytest-soft-assertions’ > Install Package
+ 
+
+# Reports
+
+**9. Install Pytest html reports**
 
     pip install pytest-html
 
