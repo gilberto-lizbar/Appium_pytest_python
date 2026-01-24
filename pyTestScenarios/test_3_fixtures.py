@@ -17,14 +17,14 @@ def before_Each_function():
     print("appium server stop")
 
 
-def test_login(setup, before_Each_function):
+def test_login():
     print("login test")
 
 
-def test_logout(setup, before_Each_function):
+def test_logout():
     print("logout test")
 
 
-#@pytest.mark.usefixtures("setup", "before_Each_function")
-#def test_other():
-#    print("other test")
+@pytest.mark.usefixtures("setup", "before_Each_function")
+def test_other():
+    print("other test")
