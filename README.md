@@ -113,7 +113,7 @@ clicks on dropdown and select Edit Configuration
     
     OR
     
-    Navigate to Settings > Project:[name] > Python Interpreter > + > Search ‘pytest-soft-assertions’ > Install Package
+    Navigate to Settings > Project:[name] > Python Interpreter > + > Search 'pytest-soft-assertions' > Install Package
  
 
 # Reports
@@ -121,6 +121,11 @@ clicks on dropdown and select Edit Configuration
 **9. Install Pytest html reports**
 
     pip install pytest-html
+    
+    OR
+    
+    Navigate to Settings > Project:[name] > Python Interpreter > + > Search 'pytest-html' > Install Package
+ 
 
  # Parallel Mode pytest-xdist Installation
 

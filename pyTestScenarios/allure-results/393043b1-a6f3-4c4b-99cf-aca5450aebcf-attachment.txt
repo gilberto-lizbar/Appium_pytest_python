@@ -1,0 +1,7 @@
+appium server start
+Appium running: True
+Appium listening: True
+Sign Up test
+Closing driver session...
+Stopping Appium server...
+[Teardown] Cleanup complete.
