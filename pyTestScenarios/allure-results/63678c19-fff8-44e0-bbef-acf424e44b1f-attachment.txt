@@ -1,0 +1,7 @@
+appium server start
+Appium running: True
+Appium listening: True
+Native screen recording started (PID: 91518)
+Sign Up test
+Closing driver session...
+[Teardown] Cleanup complete.

@@ -57,8 +57,7 @@ time.sleep(2)
 driver.find_element(By.ID,'android:id/button2').click()
 driver.save_screenshot("/Users/gilberto.barraza/Desktop/Repo_Cursos/Appium_Python/basics/android/records/capture2.png")
 raw_data = driver.stop_recording_screen()
-filepath = os.path.join("/Users/gilberto.barraza/Desktop/Repo_Cursos/Appium_Python/basics/android/records/"
-                        "captureVideo.mp4")
+filepath = os.path.join("/Users/gilberto.barraza/Desktop/Repo_Cursos/Appium_Python/basics/android/records/captureVideo.mp4")
 
 with open(filepath, "wb") as video:
     video.write(base64.b64decode(raw_data))

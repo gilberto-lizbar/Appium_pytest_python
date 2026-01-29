@@ -1,0 +1,8 @@
+appium server start
+Appium running: True
+Appium listening: True
+Starting screen recording...
+Sign Up test
+Test failed: Screenshot and Video attached to report.
+Closing driver session...
+[Teardown] Cleanup complete.

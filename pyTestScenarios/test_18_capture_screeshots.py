@@ -15,6 +15,14 @@ with open(test_data_path) as f:
     test_list = test_data["data"]  # Storing in a list all content of 'data' key from json
 
 
+@pytest.fixture()
+def log_on_failure(request):
+    yield
+    item = request.node
+    # Check if rep_call attribute exists and then check if it failed
+    if hasattr(item, 'rep_call') and item.rep_call.failed:
+        allure.attach(driver.get_screenshot_as_png(), name="image1", attachment_type=AttachmentType.PNG)
+
 @pytest.fixture(scope='function')
 def setup_function():
     global driver
@@ -72,7 +80,7 @@ def setup_function():
     print("[Teardown] Cleanup complete.")
 
 
-@pytest.mark.usefixtures("setup_function")
+@pytest.mark.usefixtures("setup_function", "log_on_failure")
 @pytest.mark.parametrize("test_list_item", test_list)  # Extract test_list and attached to test_list_item
 # Send test_list_item as an argument of test method to have access to test_list_item data
 def test_signUp_to_app(test_list_item):
@@ -83,7 +91,7 @@ def test_signUp_to_app(test_list_item):
     driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Continue").click()
     time.sleep(5)
     driver.find_element(AppiumBy.XPATH, "//*[@value='Enter username']").send_keys(test_list_item["username"])
-    allure.attach(driver.get_screenshot_as_png(), name='image', attachment_type=AttachmentType.PNG)
+    #allure.attach(driver.get_screenshot_as_png(), name='image', attachment_type=AttachmentType.PNG)
     driver.find_element(AppiumBy.ACCESSIBILITY_ID, "unSelected").click()
     time.sleep(1)
     driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Sign up").click()

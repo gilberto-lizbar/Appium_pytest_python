@@ -1,0 +1,11 @@
+appium server start
+Appium running: True
+Appium listening: True
+Native screen recording started (PID: 90324)
+Sign Up test
+Stopping screen recording...
+Recording completed. Writing to disk.
+
+Wrote video to: /Users/gilberto.barraza/Desktop/Repo_Cursos/Appium_Python/basics/ios/records/iOSNativeVideo.mp4
+Video saved to /Users/gilberto.barraza/Desktop/Repo_Cursos/Appium_Python/basics/ios/records/iOSNativeVideo.mp4
+Video file size: 3810078 bytes
