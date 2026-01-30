@@ -9,11 +9,11 @@ from appium.webdriver.appium_service import AppiumService
 def setup_function():
     global driver
     global appium_service
-    appium_service = AppiumService()
-    appium_service.start()
-    print("appium server start")
-    print(f"Appium running: {appium_service.is_running}")
-    print(f"Appium listening: {appium_service.is_listening}")
+    # appium_service = AppiumService()
+    # appium_service.start()
+    # print("appium server start")
+    # print(f"Appium running: {appium_service.is_running}")
+    # print(f"Appium listening: {appium_service.is_listening}")
 
     # Define Desired Capabilities in a dictionary
     desired_caps = dict(
@@ -67,16 +67,16 @@ def teardown_function():
     else:
         print("Driver was not initialized; skipping driver.quit()")
 
-    # 2. Safely stop the Appium Service
-    if 'appium_service' in globals() and appium_service:
-        try:
-            if appium_service.is_running:
-                print("Stopping Appium server...")
-                appium_service.stop()
-        except Exception as e:
-            print(f"Error stopping Appium service: {e}")
-
-    print("[Teardown] Cleanup complete.")
+    # # 2. Safely stop the Appium Service
+    # if 'appium_service' in globals() and appium_service:
+    #     try:
+    #         if appium_service.is_running:
+    #             print("Stopping Appium server...")
+    #             appium_service.stop()
+    #     except Exception as e:
+    #         print(f"Error stopping Appium service: {e}")
+    #
+    # print("[Teardown] Cleanup complete.")
 
 
 def test_demo1():

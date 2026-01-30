@@ -15,8 +15,5 @@ def pytest_runtest_makereport(item, call):
     setattr(item, "rep_" + rep.when, rep)
     return rep
 
-
 # ***************Test Reports Configuration On Failure*************** >>
 
-# Ensure Homebrew path is recognized by the script
-os.environ['PATH'] = '/opt/homebrew/bin:/usr/local/bin:' + os.environ['PATH']

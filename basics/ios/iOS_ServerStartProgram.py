@@ -25,7 +25,10 @@ desired_caps = dict(
 )
 
 appium_service = AppiumService()
-appium_service.start()
+appium_service.start(args=['--address', '127.0.0.1', '-p', '4723'],
+                     node_path='/Users/gilberto.barraza/.nvm/versions/node/v20.19.5/bin/node',
+                     main_script='/Users/gilberto.barraza/.nvm/versions/node/'
+                                 'v20.19.5/lib/node_modules/appium/build/lib/main.js')
 print(f"Appium running: {appium_service.is_running}")
 print(f"Appium listening: {appium_service.is_listening}")
 

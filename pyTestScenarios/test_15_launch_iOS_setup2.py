@@ -8,14 +8,9 @@ from appium.webdriver.common.appiumby import AppiumBy
 
 
 @pytest.fixture(scope='function')
-def setup_function():
+def setup_function(request):
     global driver
     global appium_service
-    appium_service = AppiumService()
-    appium_service.start()
-    print("appium server start")
-    print(f"Appium running: {appium_service.is_running}")
-    print(f"Appium listening: {appium_service.is_listening}")
 
     # Define Desired Capabilities in a dictionary
     desired_caps = dict(
@@ -29,17 +24,23 @@ def setup_function():
             "UIKitCatalog.app",
         udid='9B92B773-1F84-4CB2-8551-E821283E99CE',
         wdaLocalPort=8101,
-        usePrebuiltWDA=True,
+        usePrebuiltWDA=False,
         wdaLaunchTimeout=30000,
         showXcodeLog=True,
         autoAcceptAlerts=True
     )
+    appium_service = AppiumService()
+    appium_service.start()
+    print("appium server start")
+    print(f"Appium running: {appium_service.is_running}")
+    print(f"Appium listening: {appium_service.is_listening}")
 
     # To establish a session with android you need to create an instant of UIAutomator2Options
     capabilities_options = XCUITestOptions().load_capabilities(desired_caps)
     driver = webdriver.Remote('http://127.0.0.1:4723', options=capabilities_options)
     time.sleep(3)
     driver.implicitly_wait(10)
+    request.node.driver = driver
 
     yield
     if 'driver' in globals() and driver:

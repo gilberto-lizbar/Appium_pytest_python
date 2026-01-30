@@ -51,14 +51,11 @@ def setup_function(request):
     driver.implicitly_wait(10)
 
     yield
-    # <<****log_on_failure****
     item = request.node
     # Check if rep_call attribute exists and then check if it failed
     if hasattr(item, 'rep_call') and item.rep_call.failed:
         allure.attach(driver.get_screenshot_as_png(), name="image1", attachment_type=AttachmentType.PNG)
-    # ****log_on_failure****>>
 
-    # <<****closing driver****
     if 'driver' in globals() and driver:
         try:
             print("Closing driver session...")
@@ -67,9 +64,7 @@ def setup_function(request):
             print(f"Error quitting driver: {e}")
     else:
         print("Driver was not initialized; skipping driver.quit()")
-    # <<****closing driver****
 
-    # <<****stopping appium service****
     # 2. Safely stop the Appium Service
     if 'appium_service' in globals() and appium_service:
         try:
@@ -80,7 +75,6 @@ def setup_function(request):
             print(f"Error stopping Appium service: {e}")
 
     print("[Teardown] Cleanup complete.")
-    # ****stopping appium service****>>
 
 
 @pytest.mark.usefixtures("setup_function")
@@ -94,7 +88,7 @@ def test_signUp_to_app(test_list_item):
     driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Continue").click()
     time.sleep(5)
     driver.find_element(AppiumBy.XPATH, "//*[@value='Enter username']").send_keys(test_list_item["username"])
-    # allure.attach(driver.get_screenshot_as_png(), name='image', attachment_type=AttachmentType.PNG)
+    #allure.attach(driver.get_screenshot_as_png(), name='image', attachment_type=AttachmentType.PNG)
     driver.find_element(AppiumBy.ACCESSIBILITY_ID, "unSelected").click()
     time.sleep(1)
     driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Sign up").click()
