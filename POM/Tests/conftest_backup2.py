@@ -1,19 +1,28 @@
-import json
+import base64
 import time
 
 import allure
 import pytest
 from allure_commons.types import AttachmentType
-from appium import webdriver
 from appium.options.ios import XCUITestOptions
+from appium import webdriver
 from appium.webdriver.appium_service import AppiumService
-from appium.webdriver.common.appiumby import AppiumBy
 
-test_data_path = 'test_data.json'
-with open(test_data_path) as f:
-    test_data = json.load(f)
-    test_list = test_data["data"]  # Storing in a list all content of 'data' key from json
 
+# << ***************Test Reports Configuration On Failure***************
+@pytest.hookimpl(wrapper=True, tryfirst=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    # Handle both old and new pytest versions
+    if hasattr(outcome, 'get_result'):
+        rep = outcome.get_result()
+    else:
+        rep = outcome  # pytest 9.x returns the report directly
+    setattr(item, "rep_" + rep.when, rep)
+    return rep
+
+
+# ***************Test Reports Configuration On Failure*************** >>
 
 @pytest.fixture(scope='function')
 def setup_function(request):
@@ -32,11 +41,9 @@ def setup_function(request):
         deviceName='iPhone 15 Pro',
         platformName='iOS',
         platformVersion='17.4',
-        # app="/Users/gilberto.barraza/Library/Developer/Xcode/DerivedData/"
-        #     "UIKitCatalog-ffzctqjqzsaewngteseolenbqayj/Build/Products/Debug-iphonesimulator/"
-        #     "UIKitCatalog.app",
         app="/Users/gilberto.barraza/Desktop/Repo_Cursos/Courses_Resources/Appium_Selenium_Python/"
             "AppiumPython/app/iOS/Verve.app",
+        udid='9B92B773-1F84-4CB2-8551-E821283E99CE',
         wdaLocalPort=8101,
         usePrebuiltWDA=True,
         wdaLaunchTimeout=30000,
@@ -50,12 +57,29 @@ def setup_function(request):
     time.sleep(3)
     driver.implicitly_wait(10)
 
-    yield
+    # --- START RECORDING ---
+    print("Starting screen recording...")
+    driver.start_recording_screen(
+        # video_type='libx264',  # Change from 'mpeg4' to 'libx264'
+        video_quality='medium',
+        time_limit='180',
+        # fps=30  # 30 fps is more standard for playback
+    )
+
+    yield driver
     # <<****log_on_failure****
+    # --- STOP RECORDING AND PROCESS ---
+    video_raw = driver.stop_recording_screen()
+
     item = request.node
-    # Check if rep_call attribute exists and then check if it failed
+    # If the test failed, attach both Screenshot and Video to Allure
     if hasattr(item, 'rep_call') and item.rep_call.failed:
-        allure.attach(driver.get_screenshot_as_png(), name="image1", attachment_type=AttachmentType.PNG)
+        # Attach Screenshot
+        allure.attach(driver.get_screenshot_as_png(), name="failure_screenshot", attachment_type=AttachmentType.PNG)
+
+        # Decode and Attach Video
+        allure.attach(base64.b64decode(video_raw), name="failure_video", attachment_type=AttachmentType.MP4)
+        print("Test failed: Screenshot and Video attached to report.")
     # ****log_on_failure****>>
 
     # <<****closing driver****
@@ -80,21 +104,3 @@ def setup_function(request):
             print(f"Error stopping Appium service: {e}")
 
     print("[Teardown] Cleanup complete.")
-    # ****stopping appium service****>>
-
-
-@pytest.mark.usefixtures("setup_function")
-@pytest.mark.parametrize("test_list_item", test_list)  # Extract test_list and attached to test_list_item
-# Send test_list_item as an argument of test method to have access to test_list_item data
-def test_signUp_to_app(test_list_item):
-    print("Sign Up test")
-    driver.find_element(AppiumBy.ACCESSIBILITY_ID, "I already have an account").click()
-    driver.find_element(AppiumBy.XPATH, "//*[@value='Enter email address']").send_keys(test_list_item["email"])
-    driver.find_element(AppiumBy.XPATH, "//*[@value='Enter password']").send_keys(test_list_item["password"])
-    driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Continue").click()
-    time.sleep(5)
-    driver.find_element(AppiumBy.XPATH, "//*[@value='Enter username']").send_keys(test_list_item["username"])
-    # allure.attach(driver.get_screenshot_as_png(), name='image', attachment_type=AttachmentType.PNG)
-    driver.find_element(AppiumBy.ACCESSIBILITY_ID, "unSelected").click()
-    time.sleep(1)
-    driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Sign up").click()

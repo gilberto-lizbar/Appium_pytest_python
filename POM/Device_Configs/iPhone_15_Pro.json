@@ -1,0 +1,13 @@
+{
+    "automationName": "XCUITest",
+    "deviceName": "iPhone 15 Pro",
+    "platformName": "iOS",
+    "platformVersion": "17.4",
+    "app": "/Users/gilberto.barraza/Desktop/Repo_Cursos/Courses_Resources/Appium_Selenium_Python/AppiumPython/app/iOS/Verve.app",
+    "udid": "9B92B773-1F84-4CB2-8551-E821283E99CE",
+    "wdaLocalPort": 8101,
+    "usePrebuiltWDA": true,
+    "wdaLaunchTimeout": 30000,
+    "showXcodeLog": true,
+    "autoAcceptAlerts": true
+}

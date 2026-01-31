@@ -1,0 +1,15 @@
+{
+            "automationName":"UiAutomator2",
+            "deviceName":"Galaxy A03s",
+            "platformName":"Android",
+            "platformVersion":"13",
+            "app":"/Users/gilberto.barraza/Desktop/Repo_Cursos/Courses_Resources/Appium_Selenium_Python/AppiumPython/app/Android/Android-NativeDemoApp-0.4.0.apk",
+            "app_package":"com.wdiodemoapp",
+            "app_activity":"com.wdiodemoapp.MainActivity",
+            "systemPort":8201,
+            "autoGrantPermissions":true,
+            "noReset":false,
+            "fullReset":false,
+            "appWaitActivity":"*",
+            "appWaitDuration":30000
+}
